@@ -10,6 +10,7 @@ import {
   InputAdornment,
 } from "@material-ui/core";
 import useTable from "../MUI/controls/useTable";
+import {CricketerDetails} from './CricketerDetails';
 import Controls from "../MUI/controls/Controls";
 import { Search } from "@material-ui/icons";
 import SportsCricketIcon from "@material-ui/icons/SportsCricket";
@@ -38,11 +39,21 @@ export const CricketListApp = (props) => {
   const classes = useStyles();
   const [records, setRecords] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [drawerData, setDrawerData] = useState([]);
 
   const { TblContainer, TblHead } = useTable(records, headCells);
 
+  const openRecordsDrawer = (value) => {
+    setDrawerData(value);
+    setIsDrawerOpen(true);
+  };
+  const closeRecordsDrawer = () => {
+    setDrawerData(null);
+    setIsDrawerOpen(false);
+  };
   const renderName = (value) => {
-    return <a onClick={""}>{value.name}</a>;
+    return <a onClick={() => openRecordsDrawer(value)}>{value.name}</a>;
   };
 
   return (
@@ -91,6 +102,14 @@ export const CricketListApp = (props) => {
           </TableBody>
         </TblContainer>
       </Paper>
+      {isDrawerOpen && drawerData && (
+        <CricketerDetails
+          isDrawerOpen={isDrawerOpen}
+          openRecordsDrawer={openRecordsDrawer}
+          closeRecordsDrawer={closeRecordsDrawer}
+          drawerData={drawerData}
+        />
+      )}
     </React.Fragment>
   );
 };

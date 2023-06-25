@@ -1,0 +1,18 @@
+  a:hover {
+    cursor: pointer;
+    color: #3366CC;
+  }
+  p {
+    padding: 2px;
+    font-size:0.875rem;
+    color:rgba(0, 0, 0, 0.87);
+  }
+  hgroup {
+    color:#1a1c4b;
+    background-color: #3c44b126;
+    padding: 10px;
+  }
+  
+  
+  
+  
