@@ -64,7 +64,7 @@ export const CricketListApp = (props) => {
   const addSimilarPlayers = (value) => {
     let temp = [];
     for (let i=0; i< records.length; i++) {
-      if (value.type === records[i].type)
+      if (value.type === records[i].type && value.id !== records[i].id)
           temp.push(records[i]);
     }
     setSimilarPlayers(temp);
