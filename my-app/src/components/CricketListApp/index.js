@@ -44,6 +44,7 @@ export const CricketListApp = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [drawerData, setDrawerData] = useState([]);
+  const [similarPlayers, setSimilarPlayers] = useState([]);
 
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -60,7 +61,16 @@ export const CricketListApp = (props) => {
 
   const { TblContainer, TblHead } = useTable(records, headCells);
 
+  const addSimilarPlayers = (value) => {
+    let temp = [];
+    for (let i=0; i< records.length; i++) {
+      if (value.type === records[i].type)
+          temp.push(records[i]);
+    }
+    setSimilarPlayers(temp);
+  }
   const openRecordsDrawer = (value) => {
+    addSimilarPlayers(value)
     setDrawerData(value);
     setIsDrawerOpen(true);
   };
@@ -132,6 +142,7 @@ export const CricketListApp = (props) => {
           openRecordsDrawer={openRecordsDrawer}
           closeRecordsDrawer={closeRecordsDrawer}
           drawerData={drawerData}
+          similarPlayers={similarPlayers}
         />
       )}
     </React.Fragment>
