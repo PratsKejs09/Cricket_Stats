@@ -1,6 +1,7 @@
-import { Close } from "@mui/icons-material";
-import { Drawer, Container, IconButton } from "@mui/material";
 import React from 'react';
+import { Drawer, Container, IconButton } from "@mui/material";
+import { Close } from "@mui/icons-material";
+import {getPlayerDOB, getAge} from '../../utils/cricketApp'
 import './CricketListAppStyles.css'
 
 export const CricketerDetails = (props) => {
@@ -52,11 +53,11 @@ export const CricketerDetails = (props) => {
           </div>
           <div>
             <hgroup>Date Of Birth</hgroup>
-            <p>{drawerData.dobString}</p>
+            <p>{getPlayerDOB(drawerData.dob)}</p>
           </div>
           <div>
             <hgroup>Age</hgroup>
-            <p>{drawerData.age}</p>
+            <p>{getAge(drawerData.dob)}</p>
           </div>
         </Container>
 
