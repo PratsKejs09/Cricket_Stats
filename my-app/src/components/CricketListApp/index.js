@@ -37,6 +37,7 @@ const headCells = [
 export const CricketListApp = (props) => {
   const classes = useStyles();
   const [records, setRecords] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const { TblContainer, TblHead } = useTable(records, headCells);
 
@@ -49,6 +50,7 @@ export const CricketListApp = (props) => {
     const age = todayObj.diff(playerObj, "years");
     return age;
   };
+
   const renderName = (value) => {
     return <a onClick={""}>{value.name}</a>;
   };
@@ -72,13 +74,22 @@ export const CricketListApp = (props) => {
                 </InputAdornment>
               ),
             }}
-            onChange={""}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
         </Toolbar>
         <TblContainer>
           <TblHead />
           <TableBody>
-            {data.map((item) => (
+            {data
+            .filter((value) => {
+              if (searchTerm == '') {
+                return value;
+              } else if (
+                value.name.toLowerCase().includes(searchTerm.toLowerCase())
+              ) {
+                return value;
+              }
+            }).map((item) => (
               <TableRow key={item.id}>
                 <TableCell>{renderName(item)}</TableCell>
                 <TableCell>{item.type}</TableCell>
