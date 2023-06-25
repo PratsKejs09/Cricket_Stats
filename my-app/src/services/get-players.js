@@ -117,7 +117,7 @@ export const data = [
     },
   ];
 
-  const getPlayers = () => {
+export const getPlayers = () => {
     return Promise.resolve(
         data
             .sort((a, b) => {
