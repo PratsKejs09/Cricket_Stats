@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import moment from 'moment';
 import { PageHeader } from "../MUI/controls/PageHeader";
 import {
   Paper,
@@ -15,6 +14,7 @@ import Controls from "../MUI/controls/Controls";
 import { Search } from "@material-ui/icons";
 import SportsCricketIcon from "@material-ui/icons/SportsCricket";
 import { data } from "../../services/get-players";
+import {getAge} from '../../utils/cricketApp'
 
 const useStyles = makeStyles((theme) => ({
   pageContent: {
@@ -40,16 +40,6 @@ export const CricketListApp = (props) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const { TblContainer, TblHead } = useTable(records, headCells);
-
-  const getAge = (dob) => {
-    const timestamp = dob;
-    const playerDOB = moment(timestamp).format("L");
-    const today = moment().format("MM/DD/YYYY");
-    const playerObj = moment(playerDOB, "MM/DD/YYYY");
-    const todayObj = moment(today, "MM/DD/YYYY");
-    const age = todayObj.diff(playerObj, "years");
-    return age;
-  };
 
   const renderName = (value) => {
     return <a onClick={""}>{value.name}</a>;
