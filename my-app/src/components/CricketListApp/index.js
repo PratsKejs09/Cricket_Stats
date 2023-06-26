@@ -45,7 +45,11 @@ export const CricketListApp = (props) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [drawerData, setDrawerData] = useState([]);
   const [similarPlayers, setSimilarPlayers] = useState([]);
-  const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
+  const [filterFn, setFilterFn] = useState({
+    fn: (items) => {
+      return items;
+    },
+  });
 
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -60,9 +64,21 @@ export const CricketListApp = (props) => {
     dataFetch();
   }, []);
 
-  const { TblContainer, TblHead, TblPagination,
-    recordsAfterPagingAndSorting } = useTable(records, headCells, filterFn );
+  const { TblContainer, TblHead, TblPagination, recordsAfterPagingAndSorting } =
+    useTable(records, headCells, filterFn);
 
+  const handleSearch = (e) => {
+    let target = e.target;
+    setFilterFn({
+      fn: (items) => {
+        if (target.value == "") return items;
+        else
+          return items.filter((x) =>
+            x.name.toLowerCase().includes(target.value.toLowerCase())
+          );
+      },
+    });
+  };
   const addSimilarPlayers = (value) => {
     let temp = [];
     for (let i = 0; i < records.length; i++) {
@@ -106,22 +122,13 @@ export const CricketListApp = (props) => {
                 </InputAdornment>
               ),
             }}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={handleSearch}
           />
         </Toolbar>
         <TblContainer>
           <TblHead />
           <TableBody>
             {recordsAfterPagingAndSorting()
-              .filter((value) => {
-                if (searchTerm == "") {
-                  return value;
-                } else if (
-                  value.name.toLowerCase().includes(searchTerm.toLowerCase())
-                ) {
-                  return value;
-                }
-              })
               .map((item) => (
                 <TableRow key={item.id}>
                   <TableCell>{renderName(item)}</TableCell>
