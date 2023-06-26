@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Drawer, Container, IconButton } from "@mui/material";
 import { TableBody, TableRow, TableCell } from "@material-ui/core";
 import Box from '@mui/material/Box';
@@ -16,8 +16,9 @@ const headCells = [
 export const CricketerDetails = (props) => {
   const { isDrawerOpen, closeRecordsDrawer, drawerData, similarPlayers } =
     props;
+  const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
 
-  const { TblContainer, TblHead } = useTable(similarPlayers, headCells);
+  const { TblContainer, TblHead, TblPagination, recordsAfterPagingAndSorting } = useTable(similarPlayers, headCells, filterFn);
   
   const renderSimilarPlayers = (similarPlayers) => {
     if (similarPlayers.length == 0) {
@@ -41,18 +42,30 @@ export const CricketerDetails = (props) => {
     }
     else {
       return (
-        <TblContainer>
-          <TblHead />
-          <TableBody>
-            {similarPlayers.map((item) => (
-              <TableRow key={item.id}>
-                <TableCell>{item.name}</TableCell>
-                <TableCell>{item.points}</TableCell>
-                <TableCell>{item.rank}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
+        <Container
+            sx={{
+              height: 'auto',
+              width: '70rem',
+              textalign: 'justify',
+              margin: '1rem',
+              fontWeight: '600',
+              backgroundColor: '#white',
+              boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)'
+            }}
+          >
+          <TblContainer>
+            <TblHead />
+            <TableBody>
+              {recordsAfterPagingAndSorting().map((item) => (
+                <TableRow key={item.id}>
+                  <TableCell>{item.name}</TableCell>
+                  <TableCell>{item.points}</TableCell>
+                  <TableCell>{item.rank}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
           </TblContainer>
+        </Container>
       )
     }
   }

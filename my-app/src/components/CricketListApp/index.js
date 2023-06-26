@@ -45,6 +45,7 @@ export const CricketListApp = (props) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [drawerData, setDrawerData] = useState([]);
   const [similarPlayers, setSimilarPlayers] = useState([]);
+  const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
 
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -59,7 +60,8 @@ export const CricketListApp = (props) => {
     dataFetch();
   }, []);
 
-  const { TblContainer, TblHead } = useTable(records, headCells);
+  const { TblContainer, TblHead, TblPagination,
+    recordsAfterPagingAndSorting } = useTable(records, headCells, filterFn );
 
   const addSimilarPlayers = (value) => {
     let temp = [];
@@ -110,7 +112,7 @@ export const CricketListApp = (props) => {
         <TblContainer>
           <TblHead />
           <TableBody>
-            {records
+            {recordsAfterPagingAndSorting()
               .filter((value) => {
                 if (searchTerm == "") {
                   return value;
@@ -138,6 +140,7 @@ export const CricketListApp = (props) => {
             <CircularProgress />
           </center>
         </div>
+        <TblPagination />
       </Paper>
       {isDrawerOpen && drawerData && (
         <CricketerDetails
