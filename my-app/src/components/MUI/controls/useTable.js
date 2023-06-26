@@ -15,7 +15,7 @@ export const useStyles = makeStyles((theme) => ({
     "& thead th": {
       fontWeight: "600",
       color: theme.palette.primary.main,
-      backgroundColor: theme.palette.primary.light,
+      backgroundColor: '#e4e4f8',
     },
     "& tbody td": {
       fontWeight: "300",
