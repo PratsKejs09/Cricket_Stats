@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { PageHeader } from "../MUI/controls/PageHeader";
-import {CircularProgress } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import {
   Paper,
   makeStyles,
@@ -63,14 +63,17 @@ export const CricketListApp = (props) => {
 
   const addSimilarPlayers = (value) => {
     let temp = [];
-    for (let i=0; i< records.length; i++) {
-      if (value.type === records[i].type && value.id !== records[i].id)
+    for (let i = 0; i < records.length; i++) {
+      if (value.type === records[i].type && value.id !== records[i].id) {
+        if (temp.length <= 5) {
           temp.push(records[i]);
+        }
+      }
     }
     setSimilarPlayers(temp);
-  }
+  };
   const openRecordsDrawer = (value) => {
-    addSimilarPlayers(value)
+    addSimilarPlayers(value);
     setDrawerData(value);
     setIsDrawerOpen(true);
   };
