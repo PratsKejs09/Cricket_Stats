@@ -31,8 +31,8 @@ const useStyles = makeStyles((theme) => ({
 
 const headCells = [
   { id: "name", label: "Player Name" },
-  { id: "type", label: "Type" },
-  { id: "points", label: "Points" },
+  { id: "type", label: "Type", disableSorting: true },
+  { id: "points", label: "Points", disableSorting: true },
   { id: "rank", label: "Rank" },
   { id: "age", label: "Age" },
 ];
@@ -135,7 +135,7 @@ export const CricketListApp = (props) => {
                   <TableCell>{item.type}</TableCell>
                   <TableCell>{item.points}</TableCell>
                   <TableCell>{item.rank}</TableCell>
-                  <TableCell>{getAge(item.dob)}</TableCell>
+                  <TableCell>{item.age}</TableCell>
                 </TableRow>
               ))}
           </TableBody>
