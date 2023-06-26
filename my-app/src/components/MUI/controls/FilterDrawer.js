@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import "../../CricketListApp/CricketListAppStyles.css";
 
 export const FilterDrawer = (props) => {
-  const { isDrawerOpen, closeFilterDrawer, types, getSelectedTypes, selectedTypes  } = props;
+  const { isDrawerOpen, closeFilterDrawer, types, getSelectedTypes, selectedTypes, isFilterActive, setIsFilterActive  } = props;
   const [checked, setChecked] = useState([]);
 
   useEffect(() => {
@@ -28,6 +28,7 @@ export const FilterDrawer = (props) => {
     closeFilterDrawer();
   }
   const onApplyFilter = () => {
+    setIsFilterActive(true);
     getSelectedTypes(checked)
     closeFilterDrawer();
   }

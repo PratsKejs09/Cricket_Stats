@@ -53,6 +53,7 @@ export const CricketListApp = (props) => {
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [drawerData, setDrawerData] = useState([]);
   const [similarPlayers, setSimilarPlayers] = useState([]);
+  const [isFilterActive, setIsFilterActive] = useState(false);
   const [filterFn, setFilterFn] = useState({
     fn: (items) => {
       return items;
@@ -104,8 +105,8 @@ export const CricketListApp = (props) => {
   const closeFilterDrawer = () => {
     setIsFilterDrawerOpen(false);
   };
-  const onDeleteFilter = (item) => {
-    console.log(item);
+  const onDeleteFilter = () => {
+    setIsFilterActive(false)
   };
   const getSelectedTypes = (value) => {
     setSelectedTypes(value);
@@ -175,6 +176,7 @@ export const CricketListApp = (props) => {
           >
             <FilterList />
           </IconButton>
+          {isFilterActive ?
           <div>
             <div
               style={{
@@ -199,6 +201,8 @@ export const CricketListApp = (props) => {
               ))}
             </div>
           </div>
+          : ""
+          }
         </Toolbar>
         <TblContainer>
           <TblHead />
@@ -239,6 +243,8 @@ export const CricketListApp = (props) => {
           types={types}
           getSelectedTypes={getSelectedTypes}
           selectedTypes={selectedTypes}
+          isFilterActive={isFilterActive}
+          setIsFilterActive={setIsFilterActive}
         />
       )}
     </React.Fragment>
