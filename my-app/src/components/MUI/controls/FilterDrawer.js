@@ -15,7 +15,7 @@ export const FilterDrawer = (props) => {
 
   // Add/Remove checked item from list
   const handleCheck = (event) => {
-    var updatedList = [...checked];
+    let updatedList = [...checked];
     if (event.target.checked) {
       updatedList = [...checked, event.target.value];
     } else {
@@ -74,7 +74,7 @@ export const FilterDrawer = (props) => {
               </div>
               <br/><br/>
               <div>
-                <Button variant="contained" onClick={onApplyFilter} style={{width:'100px', left:'0rem', height:'40px'}}>
+                <Button variant="contained" onClick={onApplyFilter} style={{width:'100px', left:'0rem', height:'40px', backgroundColor: "#3c44b1"}}>
                     Apply
                 </Button>
               </div>
