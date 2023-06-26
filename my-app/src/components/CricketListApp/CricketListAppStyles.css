@@ -12,6 +12,12 @@
     background-color: #3c44b126;
     padding: 10px;
   }
+  .checkbox {
+    align-items: left;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+  }
   
   
   

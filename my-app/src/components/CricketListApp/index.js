@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { PageHeader } from "../MUI/controls/PageHeader";
-import { CircularProgress } from "@mui/material";
+import { FilterDrawer } from "../MUI/controls/FilterDrawer";
+import { CircularProgress, IconButton, Chip } from "@mui/material";
 import {
   Paper,
   makeStyles,
@@ -15,8 +16,9 @@ import { CricketerDetails } from "./CricketerDetails";
 import Controls from "../MUI/controls/Controls";
 import { Search } from "@material-ui/icons";
 import SportsCricketIcon from "@material-ui/icons/SportsCricket";
+import { FilterList } from "@mui/icons-material";
 // import { data } from "../../services/get-players";
-import { getAge } from "../../utils/cricketApp";
+// import { getAge } from "../../utils/cricketApp";
 import * as apiData from "../../utils/restUtil";
 
 const useStyles = makeStyles((theme) => ({
@@ -43,6 +45,14 @@ export const CricketListApp = (props) => {
   const [isLoading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
+  const [types, setTypes] = useState([
+    "allRounder",
+    "batsman",
+    "bowler",
+    "wicketKeeper",
+  ]);
+  const [selectedTypes, setSelectedTypes] = useState([]);
   const [drawerData, setDrawerData] = useState([]);
   const [similarPlayers, setSimilarPlayers] = useState([]);
   const [filterFn, setFilterFn] = useState({
@@ -64,6 +74,15 @@ export const CricketListApp = (props) => {
     dataFetch();
   }, []);
 
+  // logic to implement retian search on screen refresh
+  //  useEffect(() => {
+  //   setSearchTerm(window.localStorage.getItem('searchTerm') ? window.localStorage.getItem('searchTerm') : "");
+  // }, [searchTerm]);
+
+  // useEffect(() => {
+  //   window.localStorage.setItem('searchTerm', searchTerm);
+  // }, [searchTerm]);
+
   const { TblContainer, TblHead, TblPagination, recordsAfterPagingAndSorting } =
     useTable(records, headCells, filterFn);
 
@@ -76,6 +95,27 @@ export const CricketListApp = (props) => {
           return items.filter((x) =>
             x.name.toLowerCase().includes(target.value.toLowerCase())
           );
+      },
+    });
+    // setSearchTerm(e.target.value)
+  };
+  const openFilterDrawer = () => {
+    setIsFilterDrawerOpen(true);
+  };
+
+  const closeFilterDrawer = () => {
+    setIsFilterDrawerOpen(false);
+  };
+  const onDeleteFilter = (item) => {
+    console.log(item);
+  };
+  const getSelectedTypes = (value) => {
+    setSelectedTypes(value);
+    let target = value;
+    setFilterFn({
+      fn: (items) => {
+        if (target.length == 0) return items;
+        else return items.filter((x) => target.includes(x.type));
       },
     });
   };
@@ -124,20 +164,56 @@ export const CricketListApp = (props) => {
             }}
             onChange={handleSearch}
           />
+          <IconButton
+            onClick={openFilterDrawer}
+            style={{
+              width: "50px",
+              left: "1rem",
+              backgroundColor: "#3c44b1",
+              color: "white",
+              borderRadius: "5px",
+              marginRight: "30px",
+            }}
+          >
+            <FilterList />
+          </IconButton>
+          <div>
+            <div
+              style={{
+                height: "10%",
+                width: "100%",
+                marginLeft: "0.5rem",
+                display: selectedTypes.length === 0 ? "none" : "block",
+                fontSize: "0.8rem",
+              }}
+            >
+              <b>
+                <span>Type</span>
+              </b>
+            </div>
+            <div style={{ width: "auto", height: "90%" }}>
+              {selectedTypes.map((item) => (
+                <Chip
+                  style={{ width: "auto", margin: "0.2rem" }}
+                  label={item}
+                  onDelete={onDeleteFilter}
+                />
+              ))}
+            </div>
+          </div>
         </Toolbar>
         <TblContainer>
           <TblHead />
           <TableBody>
-            {recordsAfterPagingAndSorting()
-              .map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell>{renderName(item)}</TableCell>
-                  <TableCell>{item.type}</TableCell>
-                  <TableCell>{item.points}</TableCell>
-                  <TableCell>{item.rank}</TableCell>
-                  <TableCell>{item.age}</TableCell>
-                </TableRow>
-              ))}
+            {recordsAfterPagingAndSorting().map((item) => (
+              <TableRow key={item.id}>
+                <TableCell>{renderName(item)}</TableCell>
+                <TableCell>{item.type}</TableCell>
+                <TableCell>{item.points}</TableCell>
+                <TableCell>{item.rank}</TableCell>
+                <TableCell>{item.age}</TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </TblContainer>
         <div style={{ display: isLoading ? "none" : "block" }}>
@@ -156,6 +232,15 @@ export const CricketListApp = (props) => {
           closeRecordsDrawer={closeRecordsDrawer}
           drawerData={drawerData}
           similarPlayers={similarPlayers}
+        />
+      )}
+      {isFilterDrawerOpen && (
+        <FilterDrawer
+          isDrawerOpen={isFilterDrawerOpen}
+          closeFilterDrawer={closeFilterDrawer}
+          types={types}
+          getSelectedTypes={getSelectedTypes}
+          selectedTypes={selectedTypes}
         />
       )}
     </React.Fragment>
