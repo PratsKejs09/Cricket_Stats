@@ -51,6 +51,7 @@ export const CricketListApp = (props) => {
     "wicketKeeper",
   ]);
   const [selectedTypes, setSelectedTypes] = useState([]);
+  // const [itemsChecked, setItemsChecked] = useState([]);
   const [drawerData, setDrawerData] = useState([]);
   const [similarPlayers, setSimilarPlayers] = useState([]);
   const [isFilterActive, setIsFilterActive] = useState(false);
@@ -100,6 +101,7 @@ export const CricketListApp = (props) => {
   };
   const openFilterDrawer = () => {
     setIsFilterDrawerOpen(true);
+    // setItemsChecked()
   };
 
   const closeFilterDrawer = () => {
@@ -238,7 +240,8 @@ export const CricketListApp = (props) => {
       )}
       {isFilterDrawerOpen && (
         <FilterDrawer
-          isDrawerOpen={isFilterDrawerOpen}
+          isFilterDrawerOpen={isFilterDrawerOpen}
+          openFilterDrawer={openFilterDrawer}
           closeFilterDrawer={closeFilterDrawer}
           types={types}
           getSelectedTypes={getSelectedTypes}

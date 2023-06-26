@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import "../../CricketListApp/CricketListAppStyles.css";
 
 export const FilterDrawer = (props) => {
-  const { isDrawerOpen, closeFilterDrawer, types, getSelectedTypes, selectedTypes, isFilterActive, setIsFilterActive  } = props;
+  const { isFilterDrawerOpen, closeFilterDrawer, types, getSelectedTypes, setIsFilterActive  } = props;
   const [checked, setChecked] = useState([]);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export const FilterDrawer = (props) => {
     <React.Fragment>
       <Drawer 
       anchor="right"
-      open={isDrawerOpen}
+      open={isFilterDrawerOpen}
       onClose={onCloseDrawer}
       >
         <IconButton size="large" edge="start" color="red" onClick={onCloseDrawer} style={{width:'50px', left:'1rem'}}> 
