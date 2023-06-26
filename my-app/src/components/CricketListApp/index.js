@@ -17,8 +17,6 @@ import Controls from "../MUI/controls/Controls";
 import { Search } from "@material-ui/icons";
 import SportsCricketIcon from "@material-ui/icons/SportsCricket";
 import { FilterList } from "@mui/icons-material";
-// import { data } from "../../services/get-players";
-// import { getAge } from "../../utils/cricketApp";
 import * as apiData from "../../utils/restUtil";
 
 const useStyles = makeStyles((theme) => ({
